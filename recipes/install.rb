@@ -3,14 +3,12 @@
 
 # The http apt method isn't always installed by default, and we have a https
 # repository. Make sure it's installed.
-package 'apt-transport-https'
 
-apt_repository 'grafana' do
-  uri 'https://packagecloud.io/grafana/stable/debian/'
-  distribution 'wheezy' # This is used for all debian/ubuntu versions
-  key 'https://packagecloud.io/gpg.key'
-  components ['main']
-  action :add
+yum_repository 'grafana' do
+  description "grafana repo"
+  baseurl "https://packagecloud.io/grafana/stable/el/7/$basearch"
+  gpgkey 'https://packagecloud.io/gpg.key https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana'
+  action :create
 end
 
 package 'grafana' do
